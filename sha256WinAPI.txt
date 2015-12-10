@@ -1,0 +1,15 @@
+CryptAcquireContext
+CryptCreateHash
+CryptDestroyHash
+
+CryptCreateHash
+CryptHashData
+CryptGetHashParam
+CryptDestroyHash
+
+CryptDestroyHash
+CryptReleaseContext
+
+
+HCRYPTPROV hashProv;
+HCRYPTHASH hashGirl;
