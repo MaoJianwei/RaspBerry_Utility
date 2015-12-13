@@ -7,6 +7,8 @@ import struct
 import time
 import serial
 import datetime
+import urllib
+import os
 # Windows:
 # localIP = socket.gethostbyname(socket.gethostname())
 # print "local ip:%s "%localIP
@@ -96,6 +98,30 @@ def MaoGetIpBroad():
     return (IP, Broadcast)
 
 
+def soundIP(doIP):
+    os.system('espeak -ven+f3 -k5 -s100 "Hello, this is Big Mao Server node two"')
+    IPpiece = doIP.split('.')
+
+    for piece in IPpiece:
+        os.system("espeak -ven+f3 -k5 -s100 ." + piece)
+
+    return
+    
+    # for char in doIP:
+
+    #     print char
+
+    #     if (char >='0' and char <='9'):
+
+    #         times = int(char,10)
+    #         while(times>=0):
+    #             print '\a'
+    #             time.sleep(0.5)
+    #             times = times - 1
+    #         time.sleep(1)
+    #     else:
+    #         time.sleep(2)
+
 # ipDormitory = "10.205.14."
 # def scanShootDormitory(sock, data):
 #     for i in range(1,32):
@@ -116,6 +142,10 @@ def main():
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, True)
     sock.bind(('0.0.0.0', 0))
 
+
+    DNSLastTime = ""
+    DNSTimeCount = 61
+
     while(True):
         temperatureData = ""
         while(True):
@@ -133,21 +163,34 @@ def main():
                 serialCount = serialCount - 1
                 time.sleep(1)
 
+
+
         count = count + 1
         data = "IP=" + IP + ";"
         data = data + "CPU_Temp=" + str(get_cpu_temp()) + ";"
         data = data + "GPU_Temp=" + str(get_gpu_temp()) + ";"
         data = data + "Count=" + str(count) + ";"
         data = data + "Time=" + str(datetime.datetime.now()) + ";"
-        data = data + temperatureData
+        data = data + "Temperature=" + temperatureData + ";"
+        data = data + "DNSTime=" + DNSLastTime + ";"
 
-                
+        
         try:
             if ("1.0.8.0" == Broadcast):
                 (IP, Broadcast) = MaoGetIpBroad()
                 # print "Send_get " + IP + "," + Broadcast
             else:
                 sock.sendto(data, (Broadcast, 7181))
+                soundIP(IP)
+                if (DNSTimeCount > 60): # update per 120 seconds
+                    DNSLastTime = str(datetime.datetime.now())
+                    DNSTimeCount = 0
+                    # print DNSLastTime
+                else:
+                    DNSTimeCount = DNSTimeCount + 1
+
+            # print DNSTimeCount
+
                 # print "send to " + Broadcast
         except:
             # print "trans Error"
@@ -161,7 +204,7 @@ def main():
         record.write("</body></html>")
         record.close()
 
-        time.sleep(2)
+        time.sleep(1) # change from 2 to 1, for sound delay
  
 if __name__ == '__main__':
     main()
