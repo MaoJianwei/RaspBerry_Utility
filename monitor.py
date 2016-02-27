@@ -99,7 +99,7 @@ def MaoGetIpBroad():
 
 
 def soundIP(doIP):
-    os.system('espeak -ven+f3 -k5 -s100 "Hello, this is Big Mao Server node four"')
+    os.system('espeak -ven+f3 -k5 -s100 "Hello, this is Big Mao Server node seven"')
     IPpiece = doIP.split('.')
 
     for piece in IPpiece:
