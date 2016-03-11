@@ -88,18 +88,18 @@ def MaoGetIpBroad():
     IP_mask_num = struct.unpack("!L", socket.inet_aton(find_all_mask()))[0]
     IP_mask_num = int(MaoChangeIP01(bin(IP_mask_num)[2:]),2)
 
-    IP_num = struct.unpack("!L", socket.inet_aton(get_ip_address("eth0")))[0]
+    IP_num = struct.unpack("!L", socket.inet_aton(get_ip_address("wlan0")))[0]
 
     Broadcast_num = IP_mask_num | IP_num
 
     Broadcast = socket.inet_ntoa(struct.pack('!L',(IP_mask_num | IP_num)))
-    IP = get_ip_address("eth0")
+    IP = get_ip_address("wlan0")
 
     return (IP, Broadcast)
 
 
 def soundIP(doIP):
-    os.system('espeak -ven+f3 -k5 -s100 "Hello, this is Big Mao Server node one"')
+    # os.system('espeak -ven+f3 -k5 -s100 "Hello, this is Big Mao Server node one"')
     IPpiece = doIP.split('.')
 
     for piece in IPpiece:
@@ -175,7 +175,7 @@ def main():
                                     sock = sock,
                                     msg = "Master Broadcast " + data)
 
-                soundIP(IP)
+                # soundIP(IP)
 
                 if (DNSTimeCount > 60): # update per 120 seconds
                     # urllib.urlretrieve("http://maojianweipi:6m6a5o47121@ddns.oray.com/ph/update?hostname=maojianwei.oicp.net&myip=" + IP,"/home/pi/DNSInternalResult.txt")
@@ -203,7 +203,7 @@ def main():
         record.write("</body></html>")
         record.close()
 
-        time.sleep(1) # change from 2 to 1, for sound delay
+        time.sleep(2) # change from 2 to 1, for sound delay
  
 if __name__ == '__main__':
     main()
