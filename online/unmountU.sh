@@ -1,1 +1,0 @@
-sudo umount /home/pi/MaoUdisk

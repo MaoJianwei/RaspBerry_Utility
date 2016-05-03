@@ -1,0 +1,6 @@
+alias dump1090="sudo /home/pi/dump1090-master/dump1090.sh"
+
+alias modesmixer2='~/modesmixer2/modesmixer2.sh'
+alias mountusb='~/MaoSystem/mount.sh'
+export JAVA_HOME='/usr/lib/jvm/jdk-8-oracle-arm-vfp-hflt/'
+

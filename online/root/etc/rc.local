@@ -1,0 +1,3 @@
+sh /home/pi/MaoSystem/start.sh &
+
+exit 0
